@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Justice in Time</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: black;
+            overflow-x: hidden;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        /* ===== INTRO BLACK SCREEN ===== */
+        .intro {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: black;
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: introFade 2s forwards;
+        }
+
+        @keyframes introFade {
+            0% {
+                opacity: 1;
+            }
+
+            80% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        /* LOGO REVEAL */
+        .logo-intro {
+            width: 500px;
+            opacity: 0;
+            transform: scale(0.6);
+            animation: logoBoom 2s ease forwards;
+        }
+
+        @keyframes logoBoom {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+                filter: blur(10px);
+            }
+
+            60% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+                filter: blur(0);
+            }
+        }
+
+        /* FLASH */
+        .flash {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: white;
+            opacity: 0;
+            animation: flash 0.3s 1.8s;
+        }
+
+        @keyframes flash {
+            0% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* ===== MAIN ===== */
+        .main {
+            height: 100vh;
+            background: url('background.jpg') center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* ZOOM EFFECT */
+        .main.zoom {
+            transform: scale(1.1);
+            filter: blur(6px);
+        }
+
+        /* FILE OPEN */
+        .content {
+            max-width: 900px;
+            padding: 40px;
+            background: rgba(15, 15, 15, 0.85);
+            border: 1px solid rgba(139, 0, 0, 0.4);
+            border-radius: 20px;
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.9);
+
+            animation: fileOpen 1.2s ease 1.8s forwards;
+            opacity: 0;
+
+            position: relative;
+            /* FIX */
+            overflow: hidden;
+            /* FIX */
+        }
+
+        @keyframes fileOpen {
+            from {
+                transform: translateY(100px) scale(0.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* CLASSIFIED */
+        .stamp {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: rgba(139, 0, 0, 0.5);
+            font-size: 28px;
+            border: 2px solid rgba(139, 0, 0, 0.5);
+            padding: 5px 15px;
+            transform: rotate(-15deg);
+        }
+
+        /* LOGO */
+        .logo {
+            width: 120px;
+            margin: auto;
+            display: block;
+            opacity: 0;
+            animation: fadeUp 1s 4.5s forwards;
+        }
+
+        /* TYPEWRITER */
+        h1 {
+            font-family: 'Share Tech Mono';
+            color: #e0e0e0;
+            margin-top: 20px;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid #8b0000;
+            width: 0;
+            letter-spacing: 2px;
+
+            animation: typing 1.5s steps(40) 2.5s forwards,
+                blink 0.7s infinite,
+                flicker 3s infinite;
+        }
+
+        @keyframes typing {
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        /* FLICKER */
+        @keyframes flicker {
+
+            0%,
+            18%,
+            22%,
+            25%,
+            53%,
+            57%,
+            100% {
+                opacity: 1;
+            }
+
+            20%,
+            24%,
+            55% {
+                opacity: 0.4;
+            }
+        }
+
+        p {
+            color: #9a9a9a;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeUp 1s 4s forwards;
+        }
+
+        .buttons {
+            margin-top: 30px;
+            opacity: 0;
+            animation: fadeUp 1s 4.5s forwards;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* BUTTON */
+        .btn {
+            padding: 15px 80px;
+            background: linear-gradient(135deg, #8b0000, #3b0000);
+            border-radius: 30px;
+            color: white;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* ===== FIXED SCAN LIGHT ===== */
+        .content::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -120%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(120deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.08),
+                    transparent);
+            animation: scan 3s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes scan {
+            0% {
+                left: -120%;
+            }
+
+            100% {
+                left: 120%;
+            }
+        }
+
+        /* GLITCH */
+        .glitch {
+            animation: glitch 2s infinite;
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: translate(0);
+            }
+
+            20% {
+                transform: translate(-2px, 2px);
+            }
+
+            40% {
+                transform: translate(2px, -2px);
+            }
+
+            60% {
+                transform: translate(-1px, 1px);
+            }
+
+            80% {
+                transform: translate(1px, -1px);
+            }
+
+            100% {
+                transform: translate(0);
+            }
+        }
+
+        /* ===== TRANSITION OVERLAY ===== */
+        .transition {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 998;
+            transition: opacity 1s ease;
+        }
+
+        .transition.active {
+            opacity: 1;
+        }
+
+        /* ===== DEATH ROW UI ===== */
+        #deathRowUI {
+            display: none;
+            padding: 40px;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        .case-row {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+        }
+
+        .case-card {
+            min-width: 260px;
+            height: 320px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .case-card img,
+        .case-card video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .case-card video {
+            display: none
+        }
+
+        .case-card:hover video {
+            display: block
+        }
+
+        .case-card:hover img {
+            display: none
+        }
+
+        .case-info {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(transparent, black);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="flash" class="transition-flash">
+        <!-- INTRO -->
+        <div class="intro">
+            <img src="Logo.png" class="logo-intro">
+            <div class="flash"></div>
+        </div>
+
+        <!-- MAIN -->
+        <div class="main" id="homeScreen">
+
+            <div class="content">
+                <div class="stamp">Just In Time</div>
+
+                <img src="Logo.png" style="width: 70px;">
+
+                <h1>Death Row Archive: Access Granted</h1>
+
+                <p>
+                    This archive contains the final records of death row inmates.
+
+                    Each case reveals the crimes, the trials, and the final moments before execution.
+                    No speculation. No fiction. Only documented truth.
+
+                    We break down each investigation with precision — exposing motives,
+                    evidence, and the irreversible consequences of justice.
+
+                    These are not just stories.
+                    These are the last chapters of real lives.
+
+                    Viewer discretion is advised.
+                </p>
+
+                <div class="buttons">
+                    <a href="https://www.youtube.com/@JusticeinTimesus"  class="btn">
+                        VIEW CASE FILES
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ===== DEATH ROW UI ===== -->
+        <div id="deathRowUI">
+
+            <h2>Death Row Inmates</h2>
+
+            <div class="case-row">
+
+                <div class="case-card">
+                    <img src="Logo.png">
+                    <video muted loop src="case1.mp4"></video>
+                    <div class="case-info">John Doe</div>
+                </div>
+
+                <div class="case-card">
+                    <img src="Logo.png">
+                    <video muted loop src="case2.mp4"></video>
+                    <div class="case-info">Michael Reed</div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <script>
+
+            function openDatabase() {
+
+                const main = document.getElementById("homeScreen");
+                const transition = document.querySelector(".transition");
+
+                // 🎬 zoom camera
+                main.classList.add("zoom");
+
+                // 🎬 fade to black
+                setTimeout(() => {
+                    transition.classList.add("active");
+                }, 400);
+
+                // 🎬 switch scene
+                setTimeout(() => {
+                    main.style.display = "none";
+                    document.getElementById("deathRowUI").style.display = "block";
+                    transition.classList.remove("active");
+                }, 1200);
+            }
+
+        </script>
+    </div>
+</body>
+
+</html>
